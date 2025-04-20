@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jardín Animado para mi corazón</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .name {
+      font-size: 5rem !important;
+      text-align: center;
+      margin-top: 1rem;
+    }
+    #secretBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      z-index: 10;
+    }
+    #noteModal {
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0s, opacity 0.4s ease;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9;
+    }
+    #noteModal.show {
+      visibility: visible;
+      opacity: 1;
+    }
+    .note-content {
+      background: #fff0f5;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      font-size: 1.5rem;
+      color: #c71585;
+      animation: popIn 0.6s ease-out;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <h1 class="name" id="nameTitle">Sam ❤️</h1>
+
+  <div class="flower-container">
+    <canvas id="flowerCanvas"></canvas>
+  </div>
+
+  <div class="pixel-hearts"></div>
+  <div class="click-hearts"></div>
+  <div class="bottom-messages" id="bottomMessages"></div>
+
+  <button id="secretBtn">💌</button>
+  <div id="noteModal">
+    <div class="note-content">
+        Mi princesa hermosa ❤️: Este jardín vive porque tú existes 🌷
+    </div>
+  </div>
+
+  <!-- Música de fondo -->
+  <audio id="bgMusic" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio.
+  </audio>
+
+  <!-- Script principal -->
+  <script src="script.js"></script>
+
+  <!-- Script para cambiar el nombre arriba -->
+  <script>
+    const nameMessages = [
+      "Sam ❤️",
+      "Samanta 🖤",
+      "Sammmm ❤️",
+      "Mi reina 🖤",
+      "Mi amor ❤️",
+      "Mi corazón ❤️",
+      "Mi vida 🖤"
+    ];
+
+    let nameIndex = 0;
+    const nameElement = document.getElementById("nameTitle");
+
+    function changeNameMessage() {
+      nameElement.textContent = nameMessages[nameIndex];
+      nameIndex = (nameIndex + 1) % nameMessages.length;
+    }
+    setInterval(changeNameMessage, 3000);
+
+    // Mostrar carta animada
+    const modal = document.getElementById("noteModal");
+    document.getElementById("secretBtn").onclick = (e) => {
+      e.stopPropagation();
+      modal.classList.toggle("show");
+    };
+
+    // Cerrar al hacer clic fuera de la carta
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.classList.remove("show");
+      }
+    });
+
+    // Activar música automáticamente
+    window.addEventListener('DOMContentLoaded', () => {
+      const music = document.getElementById("bgMusic");
+      music.volume = 0.5;
+      music.play().catch(() => {
+        document.body.addEventListener('click', () => music.play(), { once: true });
+      });
+    });
+  </script>
+</body>
+</html>
