@@ -79,7 +79,7 @@ const flowerEmojis = ["🌸", "🌼", "🌹", "🌻", "🌺", "🌷", "💐", "�
 let currentFlower = Math.floor(Math.random() * flowerEmojis.length);
 
 function drawCenterFlower() {
-  ctx.font = "300px serif";
+  ctx.font = `${canvas.height * 0.25}px serif`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText(flowerEmojis[currentFlower], canvas.width / 2, canvas.height * 0.7);
